@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Document</title>
+    <link href="style.css" rel="stylesheet"></style>
+  </head>
+  <body>
+    <section class="section">
+      <div class="container">
+        <div>
+          <p class="income-number" id="user-input">כמה הכנסה צפויה לך בשנה הקרובה?</p>
+          <input
+          type="range"
+          min="100000"
+          max="650000"
+          value="350000"
+          class="range-slider"
+          id="myRange"
+          />
+          
+        </div>
+
+        <div class="graph-wrapper">
+          <div class="graph-content">
+            <div class="graph-part part1">
+              <text class="graph-name">מס הכנסה</text>
+            </div>
+            <div class="graph-part part2">
+              <text class="graph-name">ביטוח לאומי</text>
+            </div>
+            <div class="graph-part part3">
+              <text class="graph-name">הפרשות</text>
+            </div>
+            <div class="graph-part part4">
+              <text class="graph-name">הוצאות</text>
+            </div>
+            <div class="graph-part part5 is-relative">
+              <text class="graph-name is-relative">נטו</text>
+            </div>
+          </div>
+        </div>
+
+        <div class="nums-wrap">
+          <div class="income-item-wrap">
+            <p id="precent-left">0</p>
+            <p class="label"> מברוטו > לנטו</p>
+        </div>
+        <div class="income-item-wrap">
+
+          <input class="income-number input-field" placeholder="0" type="number" id="z-points" value="2.5"></input>
+          <p class="label">נקודות זכות</p>
+      </div>
+      <div class="income-item-wrap">
+
+        <input class="income-number input-field" placeholder="0" type="number" id="expenses" value="0"></input>
+        <p class="label">הוצאות בש"ח</p>
+    </div>
+    <div class="income-item-wrap">
+
+      <input class="income-number input-field" placeholder="0" type="number" id="deductions" value="0"></input>
+      <p class="label">הפרשות </p>
+  </div>
+     
+
+          <div class="income-item-wrap">
+
+              <p id="taxed-income">0</p>
+              <p class="label">נטו</p>
+          </div>
+          
+          <div class="income-item-wrap">
+              
+              <p id="gross">0</p>
+              <p class="label">סה"כ מסים</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script src="calc.js"></script>
+  </body>
+</html>
