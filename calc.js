@@ -52,8 +52,8 @@ const calcPoints = function () {
   fullInfo.zehutPoints = zPoints.value;
 };
 const calcExpenses = () => (fullInfo.expenses = Number(expensesValue.value));
-const calcDeductions = () => (fullInfo.socialDeductions = Number(deductionsValue.value));
-
+const calcDeductions = () =>
+  (fullInfo.socialDeductions = Number(deductionsValue.value));
 
 const calcIncomeTax = function (obj) {
   let taxAmt = 0;
@@ -110,32 +110,34 @@ const updateUI = function (obj) {
   ///////////////update graph
 
   //// move total graph with slider
-    // graphWrap.style.width = `${Math.round(
-    //     (rangeInput.value / 450000 - 0.4444) * 100
-    //     )}%`;
+  // graphWrap.style.width = `${Math.round(
+  //     (rangeInput.value / 450000 - 0.4444) * 100
+  //     )}%`;
 
-    
   //grow grpah items
   graphITax.style.width = `${(
     (fullInfo.incomeTax / fullInfo.grossIncome) *
     100
   ).toFixed(0)}%`; //income tax = gross
   graphSTax.style.width = `${(fullInfo.socialSecTaxPrecent * 100).toFixed(0)}%`; //social tax
-  graphSdeduct.style.width = `${Number((fullInfo.socialDeductions/fullInfo.grossIncome)*100).toFixed(0)}%`; // Total deductions (pension and Keren)
+  graphSdeduct.style.width = `${Number(
+    (fullInfo.socialDeductions / fullInfo.grossIncome) * 100
+  ).toFixed(0)}%`; // Total deductions (pension and Keren)
   graphExpenses.style.width = `${(
     (fullInfo.expenses / fullInfo.grossIncome) *
     100
   ).toFixed(0)}%`; // taxable Expenses
-  graphNet.style.width = `${(Number(fullInfo.netIncome/fullInfo.grossIncome)*100).toFixed(0)}%`; // Total deductions (pension and Keren)
+  graphNet.style.width = `${(
+    Number(fullInfo.netIncome / fullInfo.grossIncome) * 100
+  ).toFixed(0)}%`; // Total deductions (pension and Keren)
 
-
-//   // hide item if value is 0
-//   graphSdeduct.style.width === "0%"
-//     ? (graphSdeduct.style.display = "none")
-//     : (graphSdeduct.style.display = "flex");
-//   graphExpenses.style.width === "0%"
-//     ? (graphSdeduct.style.display = "none")
-//     : (graphSdeduct.style.display = "flex");
+  //   // hide item if value is 0
+  //   graphSdeduct.style.width === "0%"
+  //     ? (graphSdeduct.style.display = "none")
+  //     : (graphSdeduct.style.display = "flex");
+  //   graphExpenses.style.width === "0%"
+  //     ? (graphSdeduct.style.display = "none")
+  //     : (graphSdeduct.style.display = "flex");
 };
 
 const calcAll = function (obj) {
@@ -143,7 +145,7 @@ const calcAll = function (obj) {
   init();
   calcExpenses();
   calcPoints();
-  calcDeductions()
+  calcDeductions();
   calcAllDeductubles(obj);
   calcIncomeTax(obj);
   calcSocialSec(obj);
@@ -162,6 +164,12 @@ rangeInput.addEventListener("input", function () {
 
 for (const ev of allInputFields)
   ev.addEventListener("input", function () {
+    ev.addEventListener("mousemove", (event) => {
+      if (event.buttons === 1) {
+        ev.value =
+          Number(ev.value) + (event.movementY < 0 ? 1 : -1);
+      }
+    });
     calcAll(fullInfo);
   });
 
