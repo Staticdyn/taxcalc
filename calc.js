@@ -110,6 +110,8 @@ const updateUI = function (obj) {
   ///////////////update graph
 
   //// move total graph with slider
+
+  
     // graphWrap.style.width = `${Math.round(
     //     (rangeInput.value / 450000 - 0.4444) * 100
     //     )}%`;
