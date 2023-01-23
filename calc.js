@@ -26,7 +26,6 @@ const graphNet = document.querySelector(".part5");
 const zPoints = document.querySelector("#z-points");
 const expensesValue = document.querySelector("#expenses");
 const deductionsValue = document.querySelector("#deductions");
-
 const allInputFields = document.querySelectorAll(".income-number");
 
 const fullInfo = {
@@ -48,7 +47,7 @@ const init = function () {
 };
 
 const calcPoints = function () {
-  fullInfo.zPointValue = zPoints.value * 2894;
+  fullInfo.zPointValue = zPoints.value * 2820;
   fullInfo.zehutPoints = zPoints.value;
 };
 const calcExpenses = () => (fullInfo.expenses = Number(expensesValue.value));
@@ -164,13 +163,16 @@ rangeInput.addEventListener("input", function () {
 
 for (const ev of allInputFields)
   ev.addEventListener("input", function () {
-    ev.addEventListener("mousemove", (event) => {
-      if (event.buttons === 1) {
-        ev.value =
-          Number(ev.value) + (event.movementY < 0 ? 1 : -1);
-      }
-    });
     calcAll(fullInfo);
   });
+
+  document.addEventListener("mousemove", (event) => {
+    if (event.buttons === 1 && event.target.classList.contains("input-field")) {
+      event.target.value = Number(event.target.value) + (event.movementY < 0 ? 100 : -100);
+      calcAll(fullInfo);
+
+    }
+  });
+
 
 console.log(allInputFields);

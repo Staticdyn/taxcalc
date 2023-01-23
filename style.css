@@ -9,7 +9,7 @@
 html {
   background-color: #3f39ff;
   font-family: "IBM plex sans hebrew";
-  font-weight: 400;
+  font-weight: 300;
   font-size: 1rem;
   color: aliceblue;
   direction: rtl;
@@ -17,6 +17,20 @@ html {
 
 .section {
   padding: 60px;
+}
+
+h1{
+  display: block;
+  font-size: 1.2rem;
+  font-weight: 200;
+  
+}
+
+#user-input{
+  display: block;
+  margin-block-start: 0;
+  font-size: 4rem;
+  font-weight: 100;
 }
 
 .container {
@@ -66,6 +80,8 @@ input[type="text"]:focus {
   font-size: 2rem;
   display: inline;
   margin-bottom: 0px;
+  cursor: grab;
+
 }
 
 .label {
@@ -93,7 +109,6 @@ input[type="text"]:focus {
 }
 
 .graph-part {
-  
   flex-basis: 1;
   flex-shrink: 1;
   height: 3rem;
