@@ -166,13 +166,12 @@ for (const ev of allInputFields)
     calcAll(fullInfo);
   });
 
-  document.addEventListener("mousemove", (event) => {
-    if (event.buttons === 1 && event.target.classList.contains("input-field")) {
-      event.target.value = Number(event.target.value) + (event.movementY < 0 ? 500 : -500);
-      calcAll(fullInfo);
-
-    }
-  });
-
+document.addEventListener("mousemove", (event) => {
+  if (event.buttons === 1 && event.target.classList.contains("input-field")) {
+    event.target.value =
+      Number(event.target.value) + (event.movementY < 0 ? 500 : -500);
+    calcAll(fullInfo);
+  }
+});
 
 console.log(allInputFields);
