@@ -168,7 +168,7 @@ for (const ev of allInputFields)
 
   document.addEventListener("mousemove", (event) => {
     if (event.buttons === 1 && event.target.classList.contains("input-field")) {
-      event.target.value = Number(event.target.value) + (event.movementY < 0 ? 100 : -100);
+      event.target.value = Number(event.target.value) + (event.movementY < 0 ? 500 : -500);
       calcAll(fullInfo);
 
     }
