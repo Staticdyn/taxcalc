@@ -54,33 +54,36 @@ const init = function () {
   return Number(rangeInput.value);
 };
 
+const convertToPrecentage = function (num) {
+  return `${(num * 100).toFixed(0)}%`;
+};
+
 const calcPoints = function () {
   fullInfo.zPointValue = zPoints.value * 2820;
   fullInfo.zehutPoints = zPoints.value;
 };
 const calcExpenses = () => (fullInfo.expenses = Number(expensesValue.value));
-const calcDeductions = () =>
-  (fullInfo.socialDeductions = Number(deductionsValue.value));
+const calcDeductions = () => (fullInfo.socialDeductions = Number(deductionsValue.value));
 
-const calcIncomeTax = function (obj) {
-  let taxAmt = 0;
-  for (const bracket of incomeBrackets) {
-    if (obj.taxableIncome > bracket[1]) {
-      taxAmt += (bracket[1] - bracket[0]) * bracket[2];
-    } else if (obj.taxableIncome <= bracket[1]) {
-      taxAmt += (obj.taxableIncome - bracket[0]) * bracket[2];
-      obj.incomeTax = taxAmt;
-      return taxAmt.toFixed(0);
-    }
-  }
-};
+// const calcIncomeTax = function (obj) {
+//   let taxAmt = 0;
+//   for (const bracket of incomeBrackets) {
+//     if (obj.taxableIncome > bracket[1]) {
+//       taxAmt += (bracket[1] - bracket[0]) * bracket[2];
+//     } else if (obj.taxableIncome <= bracket[1]) {
+//       taxAmt += (obj.taxableIncome - bracket[0]) * bracket[2];
+//       obj.incomeTax = taxAmt;
+//       return taxAmt.toFixed(0);
+//     }
+//   }
+// };
 const calcTax = function (obj, arr) {
   let taxAccum = 0;
   arr.forEach((arr) => {
     taxAccum +=
-    obj.taxableIncome > arr[0] && obj.taxableIncome > arr[1] 
-    ? (arr[1] - arr[0]) * arr[2] 
-    : obj.taxableIncome > arr[0] && obj.taxableIncome < arr[1]
+      obj.taxableIncome > arr[0] && obj.taxableIncome > arr[1]
+        ? (arr[1] - arr[0]) * arr[2]
+        : obj.taxableIncome > arr[0] && obj.taxableIncome < arr[1]
         ? (obj.taxableIncome - arr[0]) * arr[2]
         : 0;
     // console.log(arr, arr[1] - arr[0],arr[2],((arr[1] - arr[0]) * arr[2]).toFixed(0),taxAccum );
@@ -93,17 +96,17 @@ const calcAllDeductubles = function (obj) {
   obj.taxableIncome =
     obj.grossIncome - obj.expenses - obj.zPointValue - obj.socialDeductions;
 };
-const calcSocialSec = function (obj) {
-  let socialSecTax = 0;
+// const calcSocialSec = function (obj) {
+//   let socialSecTax = 0;
 
-  for (const tax of socialBrackets) {
-    socialSecTax +=
-      obj.taxableIncome > tax[1]
-        ? tax[1] * tax[2]
-        : (obj.taxableIncome - tax[0]) * tax[2];
-  }
-  return (obj.socialSecTax = socialSecTax);
-};
+//   for (const tax of socialBrackets) {
+//     socialSecTax +=
+//       obj.taxableIncome > tax[1]
+//         ? tax[1] * tax[2]
+//         : (obj.taxableIncome - tax[0]) * tax[2];
+//   }
+//   return (obj.socialSecTax = socialSecTax);
+// };
 
 const calcNetIncome = function (obj) {
   return (obj.netIncome =
@@ -132,29 +135,20 @@ const updateUI = function (obj) {
 
   // Resize graph items
 
-  graphITax.style.width = `${(
-    (fullInfo.incomeTax / fullInfo.grossIncome) *
-    100
-  ).toFixed(0)}%`; //income tax = gross
+  graphITax.style.width = `${((fullInfo.incomeTax / fullInfo.grossIncome) *100).toFixed(0)}%`; //income tax = gross
   graphSTax.style.width = `${(fullInfo.socialSecTaxPrecent * 100).toFixed(0)}%`; //social tax
-  graphSdeduct.style.width = `${Number(
-    (fullInfo.socialDeductions / fullInfo.grossIncome) * 100
-  ).toFixed(0)}%`; // Total deductions (pension and Keren)
-  graphExpenses.style.width = `${(
-    (fullInfo.expenses / fullInfo.grossIncome) *
-    100
-  ).toFixed(0)}%`; // taxable Expenses
-  graphNet.style.width = `${(
-    Number(fullInfo.netIncome / fullInfo.grossIncome) * 100
-  ).toFixed(0)}%`; // Total deductions (pension and Keren)
+  graphSdeduct.style.width = `${Number((fullInfo.socialDeductions / fullInfo.grossIncome) * 100).toFixed(0)}%`; // Total deductions (pension and Keren)
+  graphExpenses.style.width = `${((fullInfo.expenses / fullInfo.grossIncome) *100).toFixed(0)}%`; // taxable Expenses
+  graphNet.style.width = `${(Number(fullInfo.netIncome / fullInfo.grossIncome) * 100).toFixed(0)}%`; // Total deductions (pension and Keren)
 
-  //   // hide item if value is 0
-  //   graphSdeduct.style.width === "0%"
-  //     ? (graphSdeduct.style.display = "none")
-  //     : (graphSdeduct.style.display = "flex");
-  //   graphExpenses.style.width === "0%"
-  //     ? (graphSdeduct.style.display = "none")
-  //     : (graphSdeduct.style.display = "flex");
+    // // hide item if value is 0
+    // graphSdeduct.style.width === "0%"
+    //   ? (graphSdeduct.style.display = "none")
+    //   : (graphSdeduct.style.display = "flex");
+
+    // graphExpenses.style.width === "0%"
+    //   ? (graphSdeduct.style.display = "none")
+    //   : (graphSdeduct.style.display = "flex");
 };
 
 const calcAll = function (obj) {
@@ -172,7 +166,7 @@ const calcAll = function (obj) {
   calcNetPrecent(obj);
   calcSocialPrecent(obj);
   updateUI(obj);
-  console.clear()
+  console.clear();
   console.log(obj);
 };
 
