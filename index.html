@@ -6,6 +6,11 @@
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link href="style.css" rel="stylesheet"></style>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans+Hebrew">
+    <script src="https://raw.githubusercontent.com/idflood/draggable-number.js/master/dist/draggable-number.min.js"> </script>
+    <script>
+        new DraggableNumber(document.getElementsByClassName('input-field')[0]);
+
+    </script>
 
   </head>
   <body>
@@ -53,17 +58,17 @@
         </div>
         <div class="income-item-wrap">
 
-          <input class="income-number input-field" placeholder="0" type="number" id="z-points" value="2.5" min="0" max="35"></input>
+          <input class="income-number input-field" placeholder="0" id="z-points" value="2.5" min="0" max="35"></input>
           <p class="label">נקודות זכות</p>
       </div>
       <div class="income-item-wrap">
 
-        <input class="income-number input-field" placeholder="0" type="number" id="expenses" value="0" min="0"></input>
+        <input class="income-number input-field" placeholder="0" id="expenses" value="0" min="0"></input>
         <p class="label">הוצאות בש"ח</p>
     </div>
     <div class="income-item-wrap">
 
-      <input class="income-number input-field" placeholder="0" type="number" id="deductions" value="0" min="0"></input>
+      <input class="income-number input-field" placeholder="0" id="deductions" value="0" min="0" max="76400"></input>
       <p class="label">הפרשות </p>
   </div>
      
@@ -82,7 +87,12 @@
         </div>
       </div>
     </section>
+    <section>
+      <div class="center-all bottom-absolute">
+        <p>Github <a href="https://github.com/Staticdyn/taxcalc" target="_blank">Here</a></p>
+      </div>
+    </section>
 
-    <script src="calc.js"></script>
+    <script type="module" src="calc.js"></script>
   </body>
 </html>

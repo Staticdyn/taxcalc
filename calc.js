@@ -1,5 +1,7 @@
 "use strict";
 
+// import "./draggable.js";
+
 // [start, end, taxPrecent]
 const taxBrackets = [
   [0, 77400, 0.1],
@@ -161,17 +163,31 @@ rangeInput.addEventListener("input", function () {
   calcAll(fullInfo);
 });
 
-for (const ev of allInputFields)
-  ev.addEventListener("input", function () {
-    calcAll(fullInfo);
-  });
+// for (const ev of allInputFields)
+//   ev.addEventListener("input", function () {
+//     calcAll(fullInfo);
+//   });
 
-document.addEventListener("mousemove", (event) => {
-  if (event.buttons === 1 && event.target.classList.contains("input-field")) {
-    event.target.value =
-      Number(event.target.value) + (event.movementY < 0 ? 500 : -500);
-    calcAll(fullInfo);
-  }
-});
+// document.addEventListener("mousemove", (event) => {
+//   if (event.buttons === 1 && event.target.classList.contains("input-field")) {
+//     event.target.value =
+//       Number(event.target.value) + (event.movementY < 0 ? 500 : -500);
+//     calcAll(fullInfo);
+//   }
+// });
 
-console.log(allInputFields);
+// console.log(allInputFields);
+
+// const buffer = 500;
+
+// document.addEventListener("mousemove", (event) => {
+//   if (event.buttons === 1 && event.target.classList.contains("input-field")) {
+//     const rect = event.target.getBoundingClientRect();
+//     if (event.clientX >= rect.x - buffer && event.clientX <= rect.x + rect.width + buffer &&
+//         event.clientY >= rect.y - buffer && event.clientY <= rect.y + rect.height + buffer) {
+//       event.target.value = Number(event.target.value) + (event.movementY < 0 ? 1000 : -1000);
+//       calcAll(fullInfo);
+
+//     }
+//   }
+// });
