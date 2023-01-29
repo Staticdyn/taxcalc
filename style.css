@@ -80,6 +80,7 @@ input[type="text"]:focus {
   display: inline;
   margin-bottom: 0px;
   cursor: grab;
+  max-width: 6ch;
 }
 
 .label {
@@ -130,7 +131,7 @@ input[type="text"]:focus {
   width: 100%;
 }
 
-a{
+a {
   color: inherit;
 }
 

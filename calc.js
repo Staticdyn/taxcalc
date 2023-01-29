@@ -74,12 +74,22 @@ const calcAllDeductubles = function (obj) {
     obj.grossIncome - obj.expenses - obj.zPointValue - obj.socialDeductions;
 };
 const calcSocialSec = function (obj) {
-  const taxes = [
-    [85464, 0.0597],
-    [85465, 0.1783],
+  const taxes = [     // [Bracket top, tax rate]
+    [85464, 0.0597],  // A bracket lower than 60% of median salary (7,122ILS in 2023)
+    [569579, 0.1783],  // Second beacket above the median salary
+    [569580, 0]       // Social tax caps at 47,465ILS per month, 0% tax above that level
   ];
 
   let socialSecTax = 0;
+
+  for (const tax of taxes){
+
+    obj.taxableIncome > taxes[0][0] ? socialSecTax = taxes [0][0] * taxes[0][1] :  //
+    socialSecTax = taxes [0][0] * taxes[0][1]
+  }
+
+
+
 
   obj.taxableIncome < taxes[0][0] && obj.taxableIncome > 0
     ? (socialSecTax = obj.taxableIncome * taxes[0][1])
@@ -108,14 +118,16 @@ const updateUI = function (obj) {
   taxedText.innerText = obj.netIncome.toFixed(0);
   grossText.innerText = (obj.grossIncome - obj.netIncome).toFixed(0);
 
-  ///////////////update graph
+  // update graph
 
   //// move total graph with slider
+
   // graphWrap.style.width = `${Math.round(
   //     (rangeInput.value / 450000 - 0.4444) * 100
   //     )}%`;
 
-  //grow grpah items
+  // Resize graph items
+
   graphITax.style.width = `${(
     (fullInfo.incomeTax / fullInfo.grossIncome) *
     100
@@ -163,10 +175,10 @@ rangeInput.addEventListener("input", function () {
   calcAll(fullInfo);
 });
 
-// for (const ev of allInputFields)
-//   ev.addEventListener("input", function () {
-//     calcAll(fullInfo);
-//   });
+for (const ev of allInputFields)
+  ev.addEventListener("input", function () {
+    calcAll(fullInfo);
+  });
 
 // document.addEventListener("mousemove", (event) => {
 //   if (event.buttons === 1 && event.target.classList.contains("input-field")) {
