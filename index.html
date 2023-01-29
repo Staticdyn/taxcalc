@@ -53,18 +53,18 @@
         </div>
         <div class="income-item-wrap">
 
-          <input class="income-number input-field" placeholder="0" id="z-points" value="2.5" min="0" step="0.5" max="35" type="number"></input>
-          <p class="label">נקודות זכות</p>
+          <input class="income-number input-field" placeholder="0" id="z-points" value="2.5" min="0" step="0.25" max="35" type="number"></input>
+          <p class="label unselectable">נקודות זכות</p>
       </div>
       <div class="income-item-wrap">
 
-        <input class="income-number input-field" placeholder="0" id="expenses" type="number" step="1000" value="0" min="0"></input>
-        <p class="label">הוצאות בש"ח</p>
+        <input class="income-number input-field unselectable" onchange="numInputChange()" placeholder="0" id="expenses" type="number" step="1000" value="0" min="0"></input>
+        <p class="label unselectable">הוצאות בש"ח</p>
     </div>
     <div class="income-item-wrap">
 
       <input class="income-number input-field" placeholder="0" id="deductions" type="number" step="1000" value="0" min="0" max="76400"></input>
-      <p class="label">הפרשות </p>
+      <p class="label unselectable">הפרשות </p>
   </div>
      
 

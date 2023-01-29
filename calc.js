@@ -166,7 +166,7 @@ const calcAll = function (obj) {
   calcNetPrecent(obj);
   calcSocialPrecent(obj);
   updateUI(obj);
-  console.clear();
+  // console.clear();
   console.log(obj);
 };
 
@@ -182,4 +182,51 @@ for (const ev of allInputFields)
     calcAll(fullInfo);
   });
 
-// console.log(allInputFields);
+
+////////////////////////
+let max = 650000;
+let _default = 0;
+let numInput = document.getElementById('expenses');
+numInput.value = _default;
+
+let mouseNumStartPosition = {};
+let numStart;
+
+function mousedownNum(e) {
+  mouseNumStartPosition.y = e.pageY;
+  numStart = parseInt(numInput.value);
+  numStart = isNaN(numStart) ? 0 : numStart;
+  calcAll(fullInfo);
+
+
+
+  // add listeners for mousemove, mouseup
+  window.addEventListener("mousemove", mousemoveNum);
+  window.addEventListener("mouseup", mouseupNum);
+}
+
+function mousemoveNum(e) {
+  console.log(e.pageY);
+  let diff = (mouseNumStartPosition.y - e.pageY)*8;
+  let newLeft = numStart + diff;
+  newLeft = newLeft > max ? max : newLeft;
+  newLeft = newLeft < 0 ? 0 : newLeft;
+  numInput.value = newLeft;
+  calcAll(fullInfo);
+
+}
+
+function mouseupNum(e) {
+  window.removeEventListener("mousemove", mousemoveNum);
+  window.removeEventListener("mouseup", mouseupNum);
+}
+
+numInput.addEventListener("mousedown", mousedownNum);
+
+function numInputChange() {
+  if(isNaN(parseInt(numInput.value))) {
+    numInput.value = 0;
+  }
+}
+
+
