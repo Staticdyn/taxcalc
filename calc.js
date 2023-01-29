@@ -2,8 +2,14 @@
 
 // import "./draggable.js";
 
-// [start, end, taxPrecent]
-const taxBrackets = [
+const socialBrackets = [
+  // [start, end, taxPrecent]
+  [0, 85464, 0.0597], // A bracket lower than 60% of median salary (7,122ILS in 2023)
+  [85465, 569579, 0.1783], // Second beacket above the median salary
+  [569580, 750000, 0], // Social tax caps at 47,465ILS per month (in 2023), 0% tax above that level
+];
+const incomeBrackets = [
+  // [start, end, taxPrecent]
   [0, 77400, 0.1],
   [77401, 110880, 0.14],
   [110881, 178080, 0.2],
@@ -32,13 +38,13 @@ const allInputFields = document.querySelectorAll(".income-number");
 
 const fullInfo = {
   grossIncome: "xxx",
+  socialSecTax: "xxx",
+  incomeTax: "xxx",
+  taxableIncome: "xxx",
   expenses: "xxx",
   zPointValue: "xxx",
-  taxableIncome: "xxx",
   zehutPoints: "xxx",
   socialDeductions: "0",
-  incomeTax: "xxx",
-  socialSecTax: "xxx",
   socialSecTaxPrecent: "xxx",
   netIncome: "xxx",
   netIncomePrecemt: "xxx",
@@ -58,7 +64,7 @@ const calcDeductions = () =>
 
 const calcIncomeTax = function (obj) {
   let taxAmt = 0;
-  for (const bracket of taxBrackets) {
+  for (const bracket of incomeBrackets) {
     if (obj.taxableIncome > bracket[1]) {
       taxAmt += (bracket[1] - bracket[0]) * bracket[2];
     } else if (obj.taxableIncome <= bracket[1]) {
@@ -68,34 +74,34 @@ const calcIncomeTax = function (obj) {
     }
   }
 };
+const calcTax = function (obj, arr) {
+  let taxAccum = 0;
+  arr.forEach((arr) => {
+    taxAccum +=
+    obj.taxableIncome > arr[0] && obj.taxableIncome > arr[1] 
+    ? (arr[1] - arr[0]) * arr[2] 
+    : obj.taxableIncome > arr[0] && obj.taxableIncome < arr[1]
+        ? (obj.taxableIncome - arr[0]) * arr[2]
+        : 0;
+    // console.log(arr, arr[1] - arr[0],arr[2],((arr[1] - arr[0]) * arr[2]).toFixed(0),taxAccum );
+  });
+
+  return taxAccum.toFixed(0);
+};
 
 const calcAllDeductubles = function (obj) {
   obj.taxableIncome =
     obj.grossIncome - obj.expenses - obj.zPointValue - obj.socialDeductions;
 };
 const calcSocialSec = function (obj) {
-  const taxes = [     // [Bracket top, tax rate]
-    [85464, 0.0597],  // A bracket lower than 60% of median salary (7,122ILS in 2023)
-    [569579, 0.1783],  // Second beacket above the median salary
-    [569580, 0]       // Social tax caps at 47,465ILS per month, 0% tax above that level
-  ];
-
   let socialSecTax = 0;
 
-  for (const tax of taxes){
-
-    obj.taxableIncome > taxes[0][0] ? socialSecTax = taxes [0][0] * taxes[0][1] :  //
-    socialSecTax = taxes [0][0] * taxes[0][1]
+  for (const tax of socialBrackets) {
+    socialSecTax +=
+      obj.taxableIncome > tax[1]
+        ? tax[1] * tax[2]
+        : (obj.taxableIncome - tax[0]) * tax[2];
   }
-
-
-
-
-  obj.taxableIncome < taxes[0][0] && obj.taxableIncome > 0
-    ? (socialSecTax = obj.taxableIncome * taxes[0][1])
-    : (socialSecTax =
-        taxes[0][0] * taxes[0][1] +
-        (obj.taxableIncome - taxes[0][0]) * taxes[1][1]);
   return (obj.socialSecTax = socialSecTax);
 };
 
@@ -112,14 +118,12 @@ const calcNetPrecent = (obj) =>
 // event listener
 
 const updateUI = function (obj) {
-  incomeNumber.innerText = `${obj.grossIncome} ש"ח`;
-
+  incomeNumber.innerText = `${obj.grossIncome}ש"ח`;
   precentLeft.innerText = `${(obj.netIncomePrecemt * 100).toFixed(0)}%`;
   taxedText.innerText = obj.netIncome.toFixed(0);
   grossText.innerText = (obj.grossIncome - obj.netIncome).toFixed(0);
 
   // update graph
-
   //// move total graph with slider
 
   // graphWrap.style.width = `${Math.round(
@@ -160,17 +164,21 @@ const calcAll = function (obj) {
   calcPoints();
   calcDeductions();
   calcAllDeductubles(obj);
-  calcIncomeTax(obj);
-  calcSocialSec(obj);
+  obj.incomeTax = calcTax(obj, incomeBrackets);
+  obj.socialSecTax = calcTax(obj, socialBrackets);
+  // calcIncomeTax(obj);
+  // calcSocialSec(obj);
   calcNetIncome(obj);
   calcNetPrecent(obj);
   calcSocialPrecent(obj);
   updateUI(obj);
+  console.clear()
   console.log(obj);
 };
 
 calcAll(fullInfo);
 
+// event listeners
 rangeInput.addEventListener("input", function () {
   calcAll(fullInfo);
 });
@@ -180,26 +188,4 @@ for (const ev of allInputFields)
     calcAll(fullInfo);
   });
 
-// document.addEventListener("mousemove", (event) => {
-//   if (event.buttons === 1 && event.target.classList.contains("input-field")) {
-//     event.target.value =
-//       Number(event.target.value) + (event.movementY < 0 ? 500 : -500);
-//     calcAll(fullInfo);
-//   }
-// });
-
 // console.log(allInputFields);
-
-// const buffer = 500;
-
-// document.addEventListener("mousemove", (event) => {
-//   if (event.buttons === 1 && event.target.classList.contains("input-field")) {
-//     const rect = event.target.getBoundingClientRect();
-//     if (event.clientX >= rect.x - buffer && event.clientX <= rect.x + rect.width + buffer &&
-//         event.clientY >= rect.y - buffer && event.clientY <= rect.y + rect.height + buffer) {
-//       event.target.value = Number(event.target.value) + (event.movementY < 0 ? 1000 : -1000);
-//       calcAll(fullInfo);
-
-//     }
-//   }
-// });
