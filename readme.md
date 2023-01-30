@@ -1,6 +1,8 @@
 
 # Welcome to our Income Tax Calculator!
 
+taxCalc demo [here](https://taxcalcil.netlify.app/)
+
 We understand that calculating your taxes can be a tedious and confusing task. That's why we've created this simple and easy-to-use tool that will take care of all the heavy lifting for you.
 
 Our calculator is based on the latest tax brackets and regulations, so you can be sure that your calculations are accurate and up-to-date. With our user-friendly interface, you can input your gross income, expenses, and even your zehut points, and our calculator will do the rest.
