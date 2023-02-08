@@ -9,7 +9,7 @@
 html {
   background-color: #3f39ff;
   font-family: "IBM plex sans hebrew";
-  font-weight: 300;
+  /* font-weight: 300; */
   font-size: 1rem;
   color: aliceblue;
   direction: rtl;
@@ -26,8 +26,8 @@ h1 {
 }
 
 #user-input {
-  display: block;
-  margin-block-start: 0;
+  /* display: block; */
+  /* margin-top: 0; */
   /* font-size: 4rem; */
   /* font-weight: 100; */
 }
@@ -38,7 +38,7 @@ h1 {
   max-width: 1280px;
 }
 
-h1{
+h1 {
   font-size: 1.5rem;
   line-height: 100%;
   margin: 0;
@@ -48,7 +48,7 @@ h1{
   background-color: transparent;
   border: 1px solid transparent;
   color: white;
-  font-weight: inherit;
+  /* font-weight: inherit; */
   width: 100%;
 }
 
@@ -70,9 +70,6 @@ input[type="text"]:focus {
   /* justify-content: space-between; */
   column-gap: 1rem;
 }
-
-
-
 
 .income-item-wrap {
   width: 2px;
@@ -97,10 +94,24 @@ input[type="text"]:focus {
   font-size: 4rem;
   display: inline;
   margin-bottom: 0px;
+  margin-top: 0px;
   cursor: grab;
-  width: 100%;
-  max-width: 8rem;
+  /* width: 100%; */
+  /* max-width: 8rem; */
   white-space: nowrap;
+}
+
+.flex {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;}
+
+.income-label{
+  line-height: 100%;
+  margin-bottom: 1.0rem;
+  
+
+
 }
 
 .number-input {
@@ -328,15 +339,12 @@ input[type="range"]::-moz-range-track {
   border: 0.2px solid #010101;
 }
 
-
-
 @media only screen and (max-width: 900px) {
-
-  h1{
+  h1 {
     font-size: 2rem;
   }
 
-.income-number{
+  .income-number {
     font-size: 5rem;
   }
 
@@ -346,7 +354,6 @@ input[type="range"]::-moz-range-track {
     justify-content: space-between;
   }
 
-  
   .income-item-wrap {
     width: 33%;
     min-width: 160px;
@@ -354,7 +361,7 @@ input[type="range"]::-moz-range-track {
     flex-basis: 30%;
   }
 
-  .section{
+  .section {
     padding: 20px;
   }
 }

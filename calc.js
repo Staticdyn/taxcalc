@@ -59,9 +59,12 @@ const convertToPrecentage = function (num) {
 };
 
 const insertComma = function (num) {
-  ///
+  /// 23,324  = 5   2,3 slice 0-2
+  /// 234,244 = 6   3,3
+  const sLen = String(num).length
+ 
 
-  return `${String(num).slice(0, 3)},${String(num).slice(3)}`;
+  return `${String(num).slice(0, sLen - 3)},${String(num).slice(-3)}`;
 };
 
 const calcPoints = function () {
@@ -128,10 +131,10 @@ const calcNetPrecent = (obj) =>
 // event listener
 
 const updateUI = function (obj) {
-  incomeNumber.innerText = `${insertComma(obj.grossIncome)} ש"ח`;
+  incomeNumber.innerText = insertComma(obj.grossIncome);
   precentLeft.innerText = `${(obj.netIncomePrecemt * 100).toFixed(0)}%`;
-  taxedText.innerText = obj.netIncome.toFixed(0);
-  grossText.innerText = (obj.grossIncome - obj.netIncome).toFixed(0);
+  taxedText.innerText = insertComma(obj.netIncome.toFixed(0));
+  grossText.innerText = insertComma((obj.grossIncome - obj.netIncome).toFixed(0));
 
   // update graph
   //// move total graph with slider
