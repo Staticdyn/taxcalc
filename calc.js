@@ -59,11 +59,10 @@ const convertToPrecentage = function (num) {
 };
 
 const insertComma = function (num) {
-///
+  ///
 
-return `${(String(num)).slice(0,3)},${(String(num)).slice(3)}`
-
-}
+  return `${String(num).slice(0, 3)},${String(num).slice(3)}`;
+};
 
 const calcPoints = function () {
   fullInfo.zPointValue = zPoints.value * 2820;
@@ -200,58 +199,15 @@ for (const ev of allInputFields)
     calcAll(fullInfo);
   });
 
-// ////////////////////////
-// //// drag inputs
-// let max = 650000;
-// let _default = 0;
-// let numInput = document.getElementById('expenses');
-// numInput.value = _default;
+///////////////////////
+//////// Input value scrubber
 
-// let mouseNumStartPosition = {};
-// let numStart;
-
-// function mousedownNum(e) {
-//   mouseNumStartPosition.y = e.pageY;
-//   numStart = parseInt(numInput.value);
-//   numStart = isNaN(numStart) ? 0 : numStart;
-//   calcAll(fullInfo);
-
-//   // add listeners for mousemove, mouseup
-//   window.addEventListener("mousemove", mousemoveNum);
-//   window.addEventListener("mouseup", mouseupNum);
-// }
-
-// function mousemoveNum(e) {
-//   console.log(e.pageY);
-//   let diff = (mouseNumStartPosition.y - e.pageY)*8;
-//   let newLeft = numStart + diff;
-//   newLeft = newLeft > max ? max : newLeft;
-//   newLeft = newLeft < 0 ? 0 : newLeft;
-//   numInput.value = newLeft;
-//   calcAll(fullInfo);
-
-// }
-
-// function mouseupNum(e) {
-//   window.removeEventListener("mousemove", mousemoveNum);
-//   window.removeEventListener("mouseup", mouseupNum);
-// }
-
-// numInput.addEventListener("mousedown", mousedownNum);
-
-// function numInputChange() {
-//   if(isNaN(parseInt(numInput.value))) {
-//     numInput.value = 0;
-//   }
-// }
-
-let max = 100;
+// let max = 100;
 let _default = 0;
 let inputs = document.querySelectorAll("input");
 let allInputs = Array.from(document.querySelectorAll("input"));
 let maxInputsArray = allInputs.map((el) => Number(el.getAttribute("max")));
 let steps = allInputs.map((el) => Number(el.getAttribute("step")));
-
 
 console.log(steps);
 
@@ -272,14 +228,12 @@ inputs.forEach((input, i) => {
   }
 
   function mousemove(e) {
-    let diff = (mouseStartPosition.y - e.pageY)*steps[i];
+    let diff = (mouseStartPosition.y - e.pageY) * steps[i];
     let newLeft = start + diff;
     newLeft = newLeft > maxInputsArray[i] ? maxInputsArray[i] : newLeft;
     newLeft = newLeft < 0 ? 0 : newLeft;
     input.value = newLeft;
     calcAll(fullInfo);
-
-
   }
 
   function mouseup(e) {
@@ -295,5 +249,3 @@ inputs.forEach((input, i) => {
     }
   }
 });
-
-
