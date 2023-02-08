@@ -25,12 +25,7 @@ h1 {
   font-weight: 200;
 }
 
-#user-input {
-  /* display: block; */
-  /* margin-top: 0; */
-  /* font-size: 4rem; */
-  /* font-weight: 100; */
-}
+
 
 .container {
   margin: auto;
@@ -101,17 +96,19 @@ input[type="text"]:focus {
   white-space: nowrap;
 }
 
+.bottom-banner {
+  top: calc(var(--full) - 60px);
+  }
+
 .flex {
   display: flex;
   flex-direction: row;
-  align-items: flex-end;}
+  align-items: flex-end;
+}
 
-.income-label{
+.income-label {
   line-height: 100%;
-  margin-bottom: 1.0rem;
-  
-
-
+  margin-bottom: 1rem;
 }
 
 .number-input {
@@ -364,4 +361,29 @@ input[type="range"]::-moz-range-track {
   .section {
     padding: 20px;
   }
+}
+
+@media only screen and (max-width: 376px) {
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  .income-number {
+    font-size: 4rem;
+  }
+
+  .income-number > p {
+    font-size: 4rem;
+  }
+
+  .income-item-wrap {
+    min-width: 100px;
+    flex-basis: 20%;
+  }
+
+  .section {
+    padding: 20px;
+  }
+
+
 }

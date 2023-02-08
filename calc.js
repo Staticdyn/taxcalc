@@ -217,3 +217,14 @@ inputs.forEach((input, i) => {
 });
 
 
+const root = document.querySelector(':root');  
+
+window.addEventListener('load', getInnerHeight);
+window.addEventListener('scroll', getInnerHeight);
+window.addEventListener('resize', getInnerHeight);
+
+function getInnerHeight() {
+   root.style.setProperty('--full', window.innerHeight + 'px');
+}
+
+
