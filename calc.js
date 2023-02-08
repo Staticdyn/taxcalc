@@ -43,7 +43,7 @@ const fullInfo = {
   taxableIncome: "xxx",
   expenses: "xxx",
   zPointValue: "xxx",
-  zehutPoints: "xxx",
+  zehutPoints: 2.5,
   socialDeductions: "0",
   socialSecTaxPrecent: "xxx",
   netIncome: "xxx",
@@ -58,12 +58,9 @@ const convertToPrecentage = function (num) {
   return `${(num * 100).toFixed(0)}%`;
 };
 
-const insertComma = function (num) {
-  /// 23,324  = 5   2,3 slice 0-2
-  /// 234,244 = 6   3,3
-  const sLen = String(num).length
+const insertComma = function (num) { // 100,000 
  
-
+  const sLen = String(num).length;
   return `${String(num).slice(0, sLen - 3)},${String(num).slice(-3)}`;
 };
 
@@ -106,18 +103,6 @@ const calcAllDeductubles = function (obj) {
   obj.taxableIncome =
     obj.grossIncome - obj.expenses - obj.zPointValue - obj.socialDeductions;
 };
-// const calcSocialSec = function (obj) {
-//   let socialSecTax = 0;
-
-//   for (const tax of socialBrackets) {
-//     socialSecTax +=
-//       obj.taxableIncome > tax[1]
-//         ? tax[1] * tax[2]
-//         : (obj.taxableIncome - tax[0]) * tax[2];
-//   }
-//   return (obj.socialSecTax = socialSecTax);
-// };
-
 const calcNetIncome = function (obj) {
   return (obj.netIncome =
     obj.grossIncome - obj.expenses - obj.incomeTax - obj.socialSecTax);
@@ -128,20 +113,13 @@ const calcSocialPrecent = (obj) =>
 const calcNetPrecent = (obj) =>
   (obj.netIncomePrecemt = (obj.netIncome / obj.grossIncome).toFixed(2));
 
-// event listener
-
 const updateUI = function (obj) {
   incomeNumber.innerText = insertComma(obj.grossIncome);
   precentLeft.innerText = `${(obj.netIncomePrecemt * 100).toFixed(0)}%`;
   taxedText.innerText = insertComma(obj.netIncome.toFixed(0));
-  grossText.innerText = insertComma((obj.grossIncome - obj.netIncome).toFixed(0));
-
-  // update graph
-  //// move total graph with slider
-
-  // graphWrap.style.width = `${Math.round(
-  //     (rangeInput.value / 450000 - 0.4444) * 100
-  //     )}%`;
+  grossText.innerText = insertComma(
+    (obj.grossIncome - obj.netIncome).toFixed(0)
+  );
 
   // Resize graph items
 
@@ -159,36 +137,24 @@ const updateUI = function (obj) {
   ).toFixed(0)}%`; // taxable Expenses
   graphNet.style.width = `${(
     Number(fullInfo.netIncome / fullInfo.grossIncome) * 100
-  ).toFixed(0)}%`; // Total deductions (pension and Keren)
-
-  // // hide item if value is 0
-  // graphSdeduct.style.width === "0%"
-  //   ? (graphSdeduct.style.display = "none")
-  //   : (graphSdeduct.style.display = "flex");
-
-  // graphExpenses.style.width === "0%"
-  //   ? (graphSdeduct.style.display = "none")
-  //   : (graphSdeduct.style.display = "flex");
-};
-
+  ).toFixed(0)}%` // Total deductions (pension and Keren)
+}
+  
 const calcAll = function (obj) {
-  fullInfo.grossIncome = init();
-  init();
-  calcExpenses();
-  calcPoints();
-  calcDeductions();
-  calcAllDeductubles(obj);
-  obj.incomeTax = calcTax(obj, incomeBrackets);
-  obj.socialSecTax = calcTax(obj, socialBrackets);
-  // calcIncomeTax(obj);
-  // calcSocialSec(obj);
-  calcNetIncome(obj);
-  calcNetPrecent(obj);
-  calcSocialPrecent(obj);
-  updateUI(obj);
-  // console.clear();
-  console.log(obj);
-};
+    fullInfo.grossIncome = init();
+    init();
+    calcExpenses();
+    calcPoints();
+    calcDeductions();
+    calcAllDeductubles(obj);
+    obj.incomeTax = calcTax(obj, incomeBrackets);
+    obj.socialSecTax = calcTax(obj, socialBrackets);
+    calcNetIncome(obj);
+    calcNetPrecent(obj);
+    calcSocialPrecent(obj);
+    updateUI(obj);
+    // console.log(obj);
+}
 
 calcAll(fullInfo);
 
@@ -205,17 +171,14 @@ for (const ev of allInputFields)
 ///////////////////////
 //////// Input value scrubber
 
-// let max = 100;
 let _default = 0;
 let inputs = document.querySelectorAll("input");
 let allInputs = Array.from(document.querySelectorAll("input"));
 let maxInputsArray = allInputs.map((el) => Number(el.getAttribute("max")));
 let steps = allInputs.map((el) => Number(el.getAttribute("step")));
 
-console.log(steps);
-
 inputs.forEach((input, i) => {
-  input.value = _default;
+  // input.value = _default;
 
   let mouseStartPosition = {};
   let start;
@@ -223,8 +186,8 @@ inputs.forEach((input, i) => {
   function mousedown(e) {
     mouseStartPosition.y = e.pageY;
     start = parseInt(input.value);
-    start = isNaN(start) ? 0 : start;
-    console.log(start);
+    // start = isNaN(start) ? 0 : start;
+    // console.log(start);
 
     window.addEventListener("mousemove", mousemove);
     window.addEventListener("mouseup", mouseup);
@@ -252,3 +215,5 @@ inputs.forEach((input, i) => {
     }
   }
 });
+
+
