@@ -128,7 +128,7 @@ const calcNetPrecent = (obj) =>
 // event listener
 
 const updateUI = function (obj) {
-  incomeNumber.innerText = `${insertComma(obj.grossIncome)}ש"ח`;
+  incomeNumber.innerText = `${insertComma(obj.grossIncome)} ש"ח`;
   precentLeft.innerText = `${(obj.netIncomePrecemt * 100).toFixed(0)}%`;
   taxedText.innerText = obj.netIncome.toFixed(0);
   grossText.innerText = (obj.grossIncome - obj.netIncome).toFixed(0);
