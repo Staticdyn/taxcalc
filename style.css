@@ -105,7 +105,7 @@ input[type="text"]:focus {
 .graph-content {
   display: flex;
   flex-direction: row;
-  background-color: hotpink;
+  background-color: white;
   width: 100%;
 }
 

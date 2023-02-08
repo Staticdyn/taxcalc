@@ -58,12 +58,20 @@ const convertToPrecentage = function (num) {
   return `${(num * 100).toFixed(0)}%`;
 };
 
+const insertComma = function (num) {
+///
+
+return `${(String(num)).slice(0,3)},${(String(num)).slice(3)}`
+
+}
+
 const calcPoints = function () {
   fullInfo.zPointValue = zPoints.value * 2820;
   fullInfo.zehutPoints = zPoints.value;
 };
 const calcExpenses = () => (fullInfo.expenses = Number(expensesValue.value));
-const calcDeductions = () => (fullInfo.socialDeductions = Number(deductionsValue.value));
+const calcDeductions = () =>
+  (fullInfo.socialDeductions = Number(deductionsValue.value));
 
 // const calcIncomeTax = function (obj) {
 //   let taxAmt = 0;
@@ -121,7 +129,7 @@ const calcNetPrecent = (obj) =>
 // event listener
 
 const updateUI = function (obj) {
-  incomeNumber.innerText = `${obj.grossIncome}ש"ח`;
+  incomeNumber.innerText = `${insertComma(obj.grossIncome)}ש"ח`;
   precentLeft.innerText = `${(obj.netIncomePrecemt * 100).toFixed(0)}%`;
   taxedText.innerText = obj.netIncome.toFixed(0);
   grossText.innerText = (obj.grossIncome - obj.netIncome).toFixed(0);
@@ -135,20 +143,30 @@ const updateUI = function (obj) {
 
   // Resize graph items
 
-  graphITax.style.width = `${((fullInfo.incomeTax / fullInfo.grossIncome) *100).toFixed(0)}%`; //income tax = gross
+  graphITax.style.width = `${(
+    (fullInfo.incomeTax / fullInfo.grossIncome) *
+    100
+  ).toFixed(0)}%`; //income tax = gross
   graphSTax.style.width = `${(fullInfo.socialSecTaxPrecent * 100).toFixed(0)}%`; //social tax
-  graphSdeduct.style.width = `${Number((fullInfo.socialDeductions / fullInfo.grossIncome) * 100).toFixed(0)}%`; // Total deductions (pension and Keren)
-  graphExpenses.style.width = `${((fullInfo.expenses / fullInfo.grossIncome) *100).toFixed(0)}%`; // taxable Expenses
-  graphNet.style.width = `${(Number(fullInfo.netIncome / fullInfo.grossIncome) * 100).toFixed(0)}%`; // Total deductions (pension and Keren)
+  graphSdeduct.style.width = `${Number(
+    (fullInfo.socialDeductions / fullInfo.grossIncome) * 100
+  ).toFixed(0)}%`; // Total deductions (pension and Keren)
+  graphExpenses.style.width = `${(
+    (fullInfo.expenses / fullInfo.grossIncome) *
+    100
+  ).toFixed(0)}%`; // taxable Expenses
+  graphNet.style.width = `${(
+    Number(fullInfo.netIncome / fullInfo.grossIncome) * 100
+  ).toFixed(0)}%`; // Total deductions (pension and Keren)
 
-    // // hide item if value is 0
-    // graphSdeduct.style.width === "0%"
-    //   ? (graphSdeduct.style.display = "none")
-    //   : (graphSdeduct.style.display = "flex");
+  // // hide item if value is 0
+  // graphSdeduct.style.width === "0%"
+  //   ? (graphSdeduct.style.display = "none")
+  //   : (graphSdeduct.style.display = "flex");
 
-    // graphExpenses.style.width === "0%"
-    //   ? (graphSdeduct.style.display = "none")
-    //   : (graphSdeduct.style.display = "flex");
+  // graphExpenses.style.width === "0%"
+  //   ? (graphSdeduct.style.display = "none")
+  //   : (graphSdeduct.style.display = "flex");
 };
 
 const calcAll = function (obj) {
@@ -182,51 +200,100 @@ for (const ev of allInputFields)
     calcAll(fullInfo);
   });
 
+// ////////////////////////
+// //// drag inputs
+// let max = 650000;
+// let _default = 0;
+// let numInput = document.getElementById('expenses');
+// numInput.value = _default;
 
-////////////////////////
-let max = 650000;
+// let mouseNumStartPosition = {};
+// let numStart;
+
+// function mousedownNum(e) {
+//   mouseNumStartPosition.y = e.pageY;
+//   numStart = parseInt(numInput.value);
+//   numStart = isNaN(numStart) ? 0 : numStart;
+//   calcAll(fullInfo);
+
+//   // add listeners for mousemove, mouseup
+//   window.addEventListener("mousemove", mousemoveNum);
+//   window.addEventListener("mouseup", mouseupNum);
+// }
+
+// function mousemoveNum(e) {
+//   console.log(e.pageY);
+//   let diff = (mouseNumStartPosition.y - e.pageY)*8;
+//   let newLeft = numStart + diff;
+//   newLeft = newLeft > max ? max : newLeft;
+//   newLeft = newLeft < 0 ? 0 : newLeft;
+//   numInput.value = newLeft;
+//   calcAll(fullInfo);
+
+// }
+
+// function mouseupNum(e) {
+//   window.removeEventListener("mousemove", mousemoveNum);
+//   window.removeEventListener("mouseup", mouseupNum);
+// }
+
+// numInput.addEventListener("mousedown", mousedownNum);
+
+// function numInputChange() {
+//   if(isNaN(parseInt(numInput.value))) {
+//     numInput.value = 0;
+//   }
+// }
+
+let max = 100;
 let _default = 0;
-let numInput = document.getElementById('expenses');
-numInput.value = _default;
-
-let mouseNumStartPosition = {};
-let numStart;
-
-function mousedownNum(e) {
-  mouseNumStartPosition.y = e.pageY;
-  numStart = parseInt(numInput.value);
-  numStart = isNaN(numStart) ? 0 : numStart;
-  calcAll(fullInfo);
+let inputs = document.querySelectorAll("input");
+let allInputs = Array.from(document.querySelectorAll("input"));
+let maxInputsArray = allInputs.map((el) => Number(el.getAttribute("max")));
+let steps = allInputs.map((el) => Number(el.getAttribute("step")));
 
 
+console.log(steps);
 
-  // add listeners for mousemove, mouseup
-  window.addEventListener("mousemove", mousemoveNum);
-  window.addEventListener("mouseup", mouseupNum);
-}
+inputs.forEach((input, i) => {
+  input.value = _default;
 
-function mousemoveNum(e) {
-  console.log(e.pageY);
-  let diff = (mouseNumStartPosition.y - e.pageY)*8;
-  let newLeft = numStart + diff;
-  newLeft = newLeft > max ? max : newLeft;
-  newLeft = newLeft < 0 ? 0 : newLeft;
-  numInput.value = newLeft;
-  calcAll(fullInfo);
+  let mouseStartPosition = {};
+  let start;
 
-}
+  function mousedown(e) {
+    mouseStartPosition.y = e.pageY;
+    start = parseInt(input.value);
+    start = isNaN(start) ? 0 : start;
+    console.log(start);
 
-function mouseupNum(e) {
-  window.removeEventListener("mousemove", mousemoveNum);
-  window.removeEventListener("mouseup", mouseupNum);
-}
-
-numInput.addEventListener("mousedown", mousedownNum);
-
-function numInputChange() {
-  if(isNaN(parseInt(numInput.value))) {
-    numInput.value = 0;
+    window.addEventListener("mousemove", mousemove);
+    window.addEventListener("mouseup", mouseup);
   }
-}
+
+  function mousemove(e) {
+    let diff = (mouseStartPosition.y - e.pageY)*steps[i];
+    let newLeft = start + diff;
+    newLeft = newLeft > maxInputsArray[i] ? maxInputsArray[i] : newLeft;
+    newLeft = newLeft < 0 ? 0 : newLeft;
+    input.value = newLeft;
+    calcAll(fullInfo);
+
+
+  }
+
+  function mouseup(e) {
+    window.removeEventListener("mousemove", mousemove);
+    window.removeEventListener("mouseup", mouseup);
+  }
+
+  input.addEventListener("mousedown", mousedown);
+
+  function inputChange() {
+    if (isNaN(parseInt(input.value))) {
+      input.value = 0;
+    }
+  }
+});
 
 
