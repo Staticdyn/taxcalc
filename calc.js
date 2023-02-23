@@ -159,124 +159,116 @@ const calcAll = function (obj) {
 
 calcAll(fullInfo);
 
-
 if (window.matchMedia("(max-width: 900px)").matches) {
-
- 
   let _default = 0;
   let inputs = document.querySelectorAll("input");
   let allInputs = Array.from(document.querySelectorAll("input"));
   let maxInputsArray = allInputs.map((el) => Number(el.getAttribute("max")));
   let steps = allInputs.map((el) => Number(el.getAttribute("step")));
-  
+
   inputs.forEach((input, i) => {
     let touchStartPosition = {};
     let start;
-  
+
     function touchstart(e) {
       touchStartPosition.y = e.touches[0].pageY;
       start = parseInt(input.value);
       window.addEventListener("touchmove", touchmove);
       window.addEventListener("touchend", touchend);
     }
-  
+
     function touchmove(e) {
-      let diff = (touchStartPosition.y - e.touches[0].pageY) * steps[i];
+      let diff =
+      Math.trunc((touchStartPosition.y - e.touches[0].pageY)) * steps[i];
       let newLeft = start + diff;
       newLeft = newLeft > maxInputsArray[i] ? maxInputsArray[i] : newLeft;
       newLeft = newLeft < 0 ? 0 : newLeft;
       input.value = newLeft;
       calcAll(fullInfo);
     }
-  
+
     function touchend(e) {
       window.removeEventListener("touchmove", touchmove);
       window.removeEventListener("touchend", touchend);
     }
-  
+
     input.addEventListener("touchstart", touchstart);
-  
+
     function inputChange() {
       if (isNaN(parseInt(input.value))) {
         input.value = 0;
       }
     }
   });
-  
-
-
-
 } else {
-    // event listeners
-    rangeInput.addEventListener("input", function () {
+  // event listeners
+  rangeInput.addEventListener("input", function () {
+    calcAll(fullInfo);
+  });
+
+  for (const ev of allInputFields)
+    ev.addEventListener("input", function () {
       calcAll(fullInfo);
     });
-    
-    for (const ev of allInputFields)
-      ev.addEventListener("input", function () {
-        calcAll(fullInfo);
-      });
-    
-    ///////////////////////
-    //////// Input value scrubber
-    
-    let _default = 0;
-    let inputs = document.querySelectorAll("input");
-    let allInputs = Array.from(document.querySelectorAll("input"));
-    let maxInputsArray = allInputs.map((el) => Number(el.getAttribute("max")));
-    let steps = allInputs.map((el) => Number(el.getAttribute("step")));
-    
-    inputs.forEach((input, i) => {
-      // input.value = _default;
-    
-      let mouseStartPosition = {};
-      let start;
-    
-      function mousedown(e) {
-        mouseStartPosition.y = e.pageY;
-        start = parseInt(input.value);
-        // start = isNaN(start) ? 0 : start;
-        // console.log(start);
-    
-        window.addEventListener("mousemove", mousemove);
-        window.addEventListener("mouseup", mouseup);
+
+  ///////////////////////
+  //////// Input value scrubber
+
+  let _default = 0;
+  let inputs = document.querySelectorAll("input");
+  let allInputs = Array.from(document.querySelectorAll("input"));
+  let maxInputsArray = allInputs.map((el) => Number(el.getAttribute("max")));
+  let steps = allInputs.map((el) => Number(el.getAttribute("step")));
+
+  inputs.forEach((input, i) => {
+    // input.value = _default;
+
+    let mouseStartPosition = {};
+    let start;
+
+    function mousedown(e) {
+      mouseStartPosition.y = e.pageY;
+      start = parseInt(input.value);
+      // start = isNaN(start) ? 0 : start;
+      // console.log(start);
+
+      window.addEventListener("mousemove", mousemove);
+      window.addEventListener("mouseup", mouseup);
+    }
+
+    function mousemove(e) {
+      let diff = (mouseStartPosition.y - e.pageY) * steps[i];
+      let newLeft = start + diff;
+      newLeft = newLeft > maxInputsArray[i] ? maxInputsArray[i] : newLeft;
+      newLeft = newLeft < 0 ? 0 : newLeft;
+      input.value = newLeft;
+      calcAll(fullInfo);
+    }
+
+    function mouseup(e) {
+      window.removeEventListener("mousemove", mousemove);
+      window.removeEventListener("mouseup", mouseup);
+    }
+
+    input.addEventListener("mousedown", mousedown);
+
+    function inputChange() {
+      if (isNaN(parseInt(input.value))) {
+        input.value = 0;
       }
-    
-      function mousemove(e) {
-        let diff = (mouseStartPosition.y - e.pageY) * steps[i];
-        let newLeft = start + diff;
-        newLeft = newLeft > maxInputsArray[i] ? maxInputsArray[i] : newLeft;
-        newLeft = newLeft < 0 ? 0 : newLeft;
-        input.value = newLeft;
-        calcAll(fullInfo);
-      }
-    
-      function mouseup(e) {
-        window.removeEventListener("mousemove", mousemove);
-        window.removeEventListener("mouseup", mouseup);
-      }
-    
-      input.addEventListener("mousedown", mousedown);
-    
-      function inputChange() {
-        if (isNaN(parseInt(input.value))) {
-          input.value = 0;
-        }
-      }
-    });
-    
-    // const root = document.querySelector(":root");
-    
-    // window.addEventListener("load", getInnerHeight);
-    // window.addEventListener("scroll", getInnerHeight);
-    // window.addEventListener("resize", getInnerHeight);
-    
-    // function getInnerHeight() {
-    //   root.style.setProperty("--full", window.innerHeight + "px");
-    // }
+    }
+  });
+
+  // const root = document.querySelector(":root");
+
+  // window.addEventListener("load", getInnerHeight);
+  // window.addEventListener("scroll", getInnerHeight);
+  // window.addEventListener("resize", getInnerHeight);
+
+  // function getInnerHeight() {
+  //   root.style.setProperty("--full", window.innerHeight + "px");
+  // }
   // Add event listener for larger screens
 
-
-    console.log("Clicked on document on a large screen");
-  }
-
+  console.log("Clicked on document on a large screen");
+}
