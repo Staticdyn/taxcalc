@@ -6,27 +6,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link href="style.css" rel="stylesheet"></style>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans+Hebrew">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Hebrew:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">    
+    
 
   </head>
   <body>
     <section class="section">
       <div class="container">
-        <div>
-          <H1>כמה הכנסה צפויה לך בשנה הקרובה?</H1>
+        <div class="hero-wrap">
+          <H1>מה ההכנסה <br> השנתית שלך?<span class="label">(ברוטו)</span></H1>
           <div class='flex'>
             <p class="income-number" id="user-input">כמה הכנסה צפויה לך בשנה הקרובה?</p>
             <p class="income-label">ש"ח</p>
           </div>
+        </div>
           <input
           type="range"
           min="100000"
           value="350000"
           max="650000"
+          inputmode="decimal"
           class="range-slider"
           />
           
-        </div>
 
         <div class="graph-wrapper">
           <div class="graph-content">
@@ -55,17 +59,19 @@
         </div>
         <div class="income-item-wrap">
 
-          <input class="number-input input-field" placeholder="0" id="z-points" value="2.5" min="0" step="0.25" max="35" type="number"></input>
+          <input class="number-input input-field" placeholder="0" id="z-points" value="2.25" min="0" step="0.25" max="35" type="number"   inputmode="decimal"
+          ></input>
           <p class="label unselectable">נקודות זכות</p>
       </div>
       <div class="income-item-wrap">
 
-        <input class="number-input input-field unselectable" placeholder="0" id="expenses" type="number" step="1000" value="3000" min="0" max="650000"></input>
+        <input class="number-input input-field unselectable"   inputmode="decimal"
+         placeholder="0" id="expenses" type="number" step="1000" value="3000" min="0" max="650000"></input>
         <p class="label unselectable">הוצאות בש"ח</p>
     </div>
     <div class="income-item-wrap">
 
-      <input class="number-input input-field" placeholder="0" id="deductions" type="number" step="1000" value="30000" min="0" max="76400"></input>
+      <input class="number-input input-field" inputmode="decimal"      placeholder="0" id="deductions" type="number" step="1000" value="30000" min="0" max="76400"></input>
       <p class="label unselectable">הפרשות </p>
   </div>
      
@@ -85,9 +91,9 @@
       </div>
     </section>
     <section class="bottom-banner">
-      <div class="center-all bottom-absolute">
+      <!-- <div class="center-all bottom-absolute">
         <p>Github <a href="https://github.com/Staticdyn/taxcalc" target="_blank">Here</a></p>
-      </div>
+      </div> -->
     </section>
 
     <script type="module" src="calc.js"></script>

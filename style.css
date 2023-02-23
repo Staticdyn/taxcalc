@@ -20,23 +20,17 @@ html {
 }
 
 h1 {
-  display: block;
-  font-size: 1.2rem;
+  /* display: block; */
+  font-size: 4rem;
   font-weight: 200;
+  line-height: 100%;
+  margin: 0;
 }
-
-
 
 .container {
   margin: auto;
   width: 100%;
   max-width: 1280px;
-}
-
-h1 {
-  font-size: 1.5rem;
-  line-height: 100%;
-  margin: 0;
 }
 
 .input-field {
@@ -80,13 +74,15 @@ input[type="text"]:focus {
   display: inline;
   margin-bottom: 0px;
   cursor: grab;
+  font-weight: 200;
   width: 100%;
   max-width: 8rem;
   white-space: nowrap;
 }
 
 .income-number {
-  font-size: 4rem;
+  font-size: 6rem;
+  font-weight: 100;
   display: inline;
   margin-bottom: 0px;
   margin-top: 0px;
@@ -98,7 +94,7 @@ input[type="text"]:focus {
 
 .bottom-banner {
   top: calc(var(--full) - 60px);
-  }
+}
 
 .flex {
   display: flex;
@@ -121,14 +117,26 @@ input[type="text"]:focus {
   white-space: nowrap;
 }
 
+.number-input:active {
+  cursor: none;
+}
+
+.hero-wrap {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+}
+
 .label {
   font-size: 1rem;
   margin-top: 0px;
+  font-weight: 900;
   pointer-events: none;
 }
 .range-slider {
   width: 100%;
-  margin: 40px 0 40px 0;
+  margin: 1.5rem 0;
 }
 
 .graph-wrapper {
@@ -149,14 +157,14 @@ input[type="text"]:focus {
 .graph-part {
   flex-basis: 1;
   flex-shrink: 1;
-  height: 3rem;
+  height: 4rem;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 0;
   width: 100%;
   font-size: 0.7rem;
-  border: 1px solid #000000;
+  border: 1px solid #2d2d2d;
   position: relative;
   /* transition: all 2s ease-in-out; */
   transition: width 0.5s ease-in-out;
@@ -213,7 +221,7 @@ a {
 
 .graph-name {
   position: absolute;
-  top: -20px;
+  bottom: -20px;
   right: 0;
   color: #ffffff;
   white-space: nowrap;
@@ -221,8 +229,8 @@ a {
 
 .is-relative {
   position: relative;
-  left: auto;
-  top: auto;
+  left: 0;
+  top: 0;
   color: #000000;
   font-size: 1.4rem;
 }
@@ -384,6 +392,4 @@ input[type="range"]::-moz-range-track {
   .section {
     padding: 20px;
   }
-
-
 }
