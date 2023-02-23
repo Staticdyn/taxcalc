@@ -179,7 +179,7 @@ if (window.matchMedia("(max-width: 900px)").matches) {
 
     function touchmove(e) {
       let diff =
-      Math.trunc((touchStartPosition.y - e.touches[0].pageY)) * steps[i];
+      Math.trunc((touchStartPosition.y - e.touches[0].pageY)/5) * steps[i];
       let newLeft = start + diff;
       newLeft = newLeft > maxInputsArray[i] ? maxInputsArray[i] : newLeft;
       newLeft = newLeft < 0 ? 0 : newLeft;
